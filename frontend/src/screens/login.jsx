@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "../config/axios";
 
 const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -9,27 +10,24 @@ const Login = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleLogin = async (e) => {
+  const navigate = useNavigate();
+
+const handleLogin = async (e) => {
     e.preventDefault();
     setMessage("");
-    // Example API call
     try {
-      const res = await fetch("/users/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-      const data = await res.json();
-      if (res.ok) {
+        const res = await axios.post("/users/login", form);
         setMessage("Login successful!");
-        // Save token, redirect, etc.
-      } else {
-        setMessage(data.message || "Login failed");
-      }
+        // Optionally save token: localStorage.setItem('token', res.data.token);
+        navigate('/');
     } catch (err) {
-      setMessage("Server error");
+        if (err.response && err.response.data && err.response.data.message) {
+            setMessage(err.response.data.message);
+        } else {
+            setMessage("Login failed");
+        }
     }
-  };
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">

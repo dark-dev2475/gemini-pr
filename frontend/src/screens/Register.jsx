@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import axios from "../config/axios";
 const Register = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
@@ -10,26 +10,19 @@ const Register = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleRegister = async (e) => {
+const handleRegister = async (e) => {
     e.preventDefault();
     setMessage("");
     try {
-      const res = await fetch("/users/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-      const data = await res.json();
-      if (res.ok) {
+        const res = await axios.post("/users/register", form);
         setMessage("Registration successful! Redirecting to login...");
         setTimeout(() => navigate("/login"), 1500);
-      } else {
-        setMessage(data.message || "Registration failed");
-      }
     } catch (err) {
-      setMessage("Server error");
+        setMessage(
+            err.response?.data?.message || "Registration failed"
+        );
     }
-  };
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
