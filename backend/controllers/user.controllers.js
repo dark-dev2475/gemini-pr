@@ -36,7 +36,7 @@ export const loginUserController = async (req, res) => {
             return res.status(401).json({ message: 'Invalid email or password' });
         }
         const token = user.generateJWT(); // <-- Call on the user instance
-        delete user.password; // Remove password from response
+        // delete user.password; // Remove password from response
         return res.status(200).json({ user, token });
     }
     catch (error) {

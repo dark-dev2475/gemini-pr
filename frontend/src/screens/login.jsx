@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../config/axios";
+import { UserContext } from '../context/user.context';
 
 const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
-
+  const { setUser } = useContext(UserContext); // Access setUser from UserContext
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -18,6 +19,9 @@ const handleLogin = async (e) => {
     try {
         const res = await axios.post("/users/login", form);
         setMessage("Login successful!");
+        localStorage.setItem('token', res.data.token);
+        console.log("User data:", res.data.user);
+        setUser(res.data.user); // Set user in context
         // Optionally save token: localStorage.setItem('token', res.data.token);
         navigate('/');
     } catch (err) {
