@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../config/axios";
+import { UserContext }  from "../context/user.context";
 const Register = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
@@ -15,6 +16,8 @@ const handleRegister = async (e) => {
     setMessage("");
     try {
         const res = await axios.post("/users/register", form);
+        localStorage.setItem('token', res.data.token);
+        console.log("User data:", res.data.user);
         setMessage("Registration successful! Redirecting to login...");
         setTimeout(() => navigate("/login"), 1500);
     } catch (err) {
