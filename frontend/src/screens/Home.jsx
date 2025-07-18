@@ -5,10 +5,10 @@ const Home = () => {
 
 
   const {user}=useContext(UserContext);
-
+ console.log("User in Home:", user);
   return (
     <div>
-     {user}
+     {JSON.stringify(user)}
     </div>
   )
 }
