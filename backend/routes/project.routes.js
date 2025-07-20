@@ -31,7 +31,7 @@ router.put(
 
 router.get('/get-project/:projectId',
     authMiddleWare.authUser,
-    // body('projectId').notEmpty().isString().withMessage('ProjectId is required and must be a string'),
+    body('projectId').notEmpty().isString().withMessage('ProjectId is required and must be a string'),
     projectController.getProjectById
 );
 
