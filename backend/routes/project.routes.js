@@ -21,12 +21,14 @@ router.put(
         .notEmpty()
         .isString()
         .withMessage('ProjectId is required and must be a string'),
-    body('users')
+    body('users','*')
         .isArray({ min: 1 })
         .withMessage('Users must be a non-empty array')
-        .custom((arr) => arr.every((u) => typeof u === 'string'))
+        .custom((arr) => Array.isArray(arr) && arr.every((u) => typeof u === 'string'))
         .withMessage('Each user must be a string'),
     projectController.addUserToProject
 );
+
+
 
 export default router;

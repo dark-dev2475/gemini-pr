@@ -52,7 +52,7 @@ export const addUserToProject = async (req, res) => {
     try {
           const { projectId, users } = req.body;
           const loggedInUser = await userModel.findOne({ email: req.user.email });
-          const project = await projectService.addUsersToProject({
+          const project = await projectService.addUserToProject({
             projectId,
             users,
             userId: loggedInUser._id

@@ -61,7 +61,7 @@ export const addUserToProject = async ({ projectId, users,userId }) => {
      if (!userId) {
         throw new Error('User ID to add project is required');
     }
-   console.log(userId);
+//    console.log(userId);
     const project = await projectModel.findOne({
         _id: projectId,
         users: userId

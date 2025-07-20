@@ -68,3 +68,15 @@ console.log("Cookies:", req.cookies);
     }
 
 }
+
+export const getAllUsersController = async (req, res) => {
+     try{
+        const loggedInUser = await userModel.findOne({ email: req.user.email });
+    const allUsers=await userServices.getAllUsers({userId: loggedInUser._id});
+    return res.status(200).json(allUsers);
+     }
+     catch(error) {
+        return res.status(500).json({ message: error.message });
+     }
+
+}

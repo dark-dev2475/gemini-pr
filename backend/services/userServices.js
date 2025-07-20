@@ -9,3 +9,12 @@ export const createUser = async ({ email, password }) => {
     const user = await userModel.create({ email, password: hashedPassword });
     return user;
 };
+
+export const getAllUsers=async ({userId}) => {
+    try {
+        const users = await userModel.find({ _id: { $ne: userId } }); // Exclude password field
+        return users;
+    } catch (error) {
+        throw new Error('Error fetching users: ' + error.message);
+    }
+}
