@@ -29,6 +29,12 @@ router.put(
     projectController.addUserToProject
 );
 
+router.get('/get-project/:projectId',
+    authMiddleWare.authUser,
+    // body('projectId').notEmpty().isString().withMessage('ProjectId is required and must be a string'),
+    projectController.getProjectById
+);
+
 
 
 export default router;
