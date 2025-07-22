@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { UserContext } from '../context/user.context';
 // import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import axios from '../config/axios'
 
 const Home = () => {
@@ -9,6 +9,17 @@ const Home = () => {
   // const navigate = useNavigate();
   const [isModal, setisModal] = useState(false)
   const [projectName, setprojectName] = useState(null)
+ 
+    useEffect(() => {
+       axios.get('/projects/all').then((res) => {
+        console.log(res.data);
+    }).catch((err) => {
+        console.error("Error fetching projects:", err);
+      });
+  }, []);
+
+
+
   function createProject(e) {
     e.preventDefault();
     

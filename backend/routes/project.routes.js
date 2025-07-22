@@ -8,9 +8,11 @@ const router = Router();
 
 router.post('/create',
     authMiddleWare.authUser,
-       body('name').notEmpty().isString().withMessage('Name is required'),
-        projectController.createProject
-)
+    body('name').notEmpty().isString().withMessage('Name is required'),
+    projectController.createProject
+);
+
+
 
 router.get('/all', authMiddleWare.authUser, projectController.getAllProjects);
 
@@ -31,9 +33,9 @@ router.put(
 
 router.get('/get-project/:projectId',
     authMiddleWare.authUser,
-    body('projectId').notEmpty().isString().withMessage('ProjectId is required and must be a string'),
     projectController.getProjectById
-);
+)
+
 
 
 
